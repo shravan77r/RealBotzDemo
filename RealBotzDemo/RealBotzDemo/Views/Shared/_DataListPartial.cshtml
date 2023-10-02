@@ -1,0 +1,49 @@
+﻿@model List<RealBotzDemo.Models.UserList>
+
+<div class="col-xl-12 col-lg-12 p-0">
+    <div class="table-responsive">
+        <table class="table cust-table table-bordered site-visit">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>Address</th>
+                    <th>Country</th>
+                    <th>Hobbies</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th class="text-center">Action</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.DateOfBirth</td>
+                            <td>@item.Address</td>
+                            <td>@item.CountryName</td>
+                            <td>@item.Hobbies</td>
+                            <td>
+                                <select class="form-control" id="Gender">
+                                    <option value="@item.Gender">@item.Gender</option>
+                                </select>
+                            </td>
+                            <td>@item.Email</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-danger btn-sm" onclick="fnDeleteData(@item.Id);" title="Delete">Delete</button>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary btn-sm" onclick="fnEditData(@item.Id);" title="Edit">Edit</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

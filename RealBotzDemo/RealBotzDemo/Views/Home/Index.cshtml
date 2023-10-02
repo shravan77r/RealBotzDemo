@@ -1,0 +1,104 @@
+﻿@model RealBotzDemo.Models.User;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+
+    <h3>User Deatils</h3>
+    <form id="myForm">
+        <input asp-for="Id" type="hidden" id="hdn_Id" />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Name</label>
+                    <span class="required text-danger">*</span>
+                    <input asp-for="Name" class="form-control" id="Name" placeholder="Enter Name" maxlength="100" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <span class="required text-danger">*</span>
+                    <input type="date" asp-for="DateOfBirth" class="form-control" id="DateOfBirth" />
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Address</label>
+                    <span class="required text-danger">*</span>
+                    <textarea asp-for="Address" class="form-control" id="Address" name="Address" placeholder="Enter Address" maxlength="1000"></textarea>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Email</label>
+                    <span class="required text-danger">*</span>
+                    <input asp-for="Email" class="form-control" placeholder="Enter Email" id="Email" maxlength="100" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Country</label>
+                    <span class="required text-danger">*</span>
+                    <select class="form-control" id="CountryId" asp-for="CountryId" asp-items="new SelectList(Model.Countries, nameof(Country.Id), nameof(Country.CountryName))">
+                        <option value="">Select Country</option>
+                    </select>
+                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Hobby</label>
+                    @foreach (var hobby in Model.Hobbies)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox" name="hobbies" id="chk_@hobby.Id" hobbyName="@hobby.Name" value="@hobby.Id" />
+                            <label class="form-check-label">@hobby.Name</label>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Gender</label>
+                    <span class="required text-danger">*</span>
+                    <select class="form-control" id="Gender" asp-for="Gender" asp-items="new SelectList(Model.GenderList, nameof(SelectListItem.Value), nameof(SelectListItem.Text))">
+                        <option value="">Select Gender</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="text-align:center;">
+            <button type="submit" id="btnSubmit" class="btn btn-primary" onclick="fnSubmit(event);">Submit</button>
+        </div>
+    </form>
+    <div class="p-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="output-area">
+                    <h3 class="mb-2 mt-2">List</h3>
+                </div>
+                <hr />
+            </div>
+            <div id="divListPartial" class="col-lg-12">
+                @Html.Partial("_DataListPartial", Model.userLists)
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
